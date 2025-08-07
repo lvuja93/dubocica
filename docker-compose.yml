@@ -14,8 +14,7 @@ services:
       - 'traefik.http.routers.dubocica.rule=Host(`next.dubocica.rs`)'
       - 'traefik.http.routers.dubocica.entrypoints=websecure'
       - 'traefik.http.routers.dubocica.tls.certresolver=myresolver'
-      - 'traefik.http.routers.dubocica.service=dubocica-main'
-      - 'traefik.http.services.dubocica-main.loadbalancer.server.port=3000'
+      - 'traefik.http.services.dubocica.loadbalancer.server.port=3000'
 
 networks:
   web:
