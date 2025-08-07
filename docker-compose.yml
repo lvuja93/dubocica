@@ -3,7 +3,7 @@ version: '3.8'
 services:
   dubocica-main:
     build: .
-    container_name: dubocica-main
+    container_name: dubocica-test
     restart: always
     ports:
       - '3000:3000'
@@ -11,7 +11,7 @@ services:
       - web
     labels:
       - 'traefik.enable=true'
-      - 'traefik.http.routers.dubocica.rule=Host(`next.dubocica.rs`)'
+      - 'traefik.http.routers.dubocica.rule=Host(`dubocica.rs`)'
       - 'traefik.http.routers.dubocica.entrypoints=websecure'
       - 'traefik.http.routers.dubocica.tls.certresolver=myresolver'
       - 'traefik.http.services.dubocica.loadbalancer.server.port=3000'
