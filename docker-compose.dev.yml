@@ -1,0 +1,37 @@
+version: '3.8'
+
+networks:
+  web:
+    external: true
+
+services:
+  webapp-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: dubocica-dev
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      HOST: 0.0.0.0
+      PORT: 3000
+      # Dodaj svoje DEV env varijable ovde ili preko env_file
+      # API_URL=https://api-dev.dubocica.rs
+    # env_file:
+    #   - .env.dev
+    expose:
+      - '3000'
+    networks:
+      - web
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.docker.network=web'
+
+      # Router za DEV domen
+      - 'traefik.http.routers.main-dev.rule=Host(`dev.dubocica.rs`)'
+      - 'traefik.http.routers.main-dev.entrypoints=websecure'
+      - 'traefik.http.routers.main-dev.tls=true'
+      - 'traefik.http.routers.main-dev.tls.certresolver=myresolver'
+
+      # Servis/port koji Traefik gađa
+      - 'traefik.http.services.main-dev.loadbalancer.server.port=3000'
