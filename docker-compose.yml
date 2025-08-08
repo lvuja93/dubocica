@@ -1,21 +1,38 @@
 version: '3.8'
 
+networks:
+  web:
+    external: true
+
 services:
-  dubocica-main:
-    build: .
-    container_name: dubocica-test
-    restart: always
-    ports:
-      - '3000:3000'
+  webapp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: dubocica-main
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      HOST: 0.0.0.0
+      PORT: 3000
+    expose:
+      - '3000'
     networks:
       - web
     labels:
       - 'traefik.enable=true'
-      - 'traefik.http.routers.dubocica.rule=Host(`next.dubocica.rs`)'
-      - 'traefik.http.routers.dubocica.entrypoints=websecure'
-      - 'traefik.http.routers.dubocica.tls.certresolver=myresolver'
-      - 'traefik.http.services.dubocica.loadbalancer.server.port=3000'
+      - 'traefik.docker.network=web'
 
-networks:
-  web:
-    external: true
+      # Router za glavni domen (apex + www)
+      - 'traefik.http.routers.main.rule=Host(`dubocica.rs`,`www.dubocica.rs`)'
+      - 'traefik.http.routers.main.entrypoints=websecure'
+      - 'traefik.http.routers.main.tls=true'
+      - 'traefik.http.routers.main.tls.certresolver=myresolver'
+
+      # www -> apex redirect (čist URL)
+      - "traefik.http.middlewares.www-to-apex.redirectregex.regex=^https?://www\\.dubocica\\.rs/(.*)"
+      - 'traefik.http.middlewares.www-to-apex.redirectregex.replacement=https://dubocica.rs/$1'
+      - 'traefik.http.routers.main.middlewares=www-to-apex'
+
+      # Port na kojem app sluša
+      - 'traefik.http.services.main.loadbalancer.server.port=3000'

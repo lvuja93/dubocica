@@ -1,21 +1,24 @@
-# Dockerfile
-
-# 1. Base image
-FROM node:24-alpine
-
-# 2. Set working directory
-WORKDIR /app
-
-# 3. Install dependencies
-COPY package*.json ./
-RUN npm install
-
-# 4. Copy the rest of the app
-COPY . .
-
-# 5. Build the app
-RUN npm run build
-
-# 6. Expose port and run
-EXPOSE 3000
-CMD ["npm", "start"]
+# --- deps ---
+    FROM node:24-alpine AS deps
+    WORKDIR /app
+    COPY package*.json ./
+    RUN npm ci
+    
+    # --- build ---
+    FROM node:24-alpine AS builder
+    WORKDIR /app
+    COPY --from=deps /app/node_modules ./node_modules
+    COPY . .
+    RUN npm run build
+    
+    # --- runtime ---
+    FROM node:24-alpine AS runner
+    WORKDIR /app
+    ENV NODE_ENV=production
+    ENV HOST=0.0.0.0
+    ENV PORT=3000
+    COPY --from=builder /app ./
+    EXPOSE 3000
+    # Forsira port/host i kad "npm start" ne prosleđuje -p/-H
+    CMD ["npm", "run", "start", "--", "-p", "3000", "-H", "0.0.0.0"]
+    
