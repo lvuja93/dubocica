@@ -6,9 +6,8 @@ const prisma = new PrismaClient();
 export async function GET() {
   try {
     // upišemo jednog usera
-    await prisma.user.create({
-      data: { email: 'test@example.com', name: 'Test User' },
-    });
+    const email = `test+${Date.now()}@example.com`;
+    await prisma.user.create({ data: { email, name: 'Test' } });
 
     // pročitamo sve usere
     const users = await prisma.user.findMany();
