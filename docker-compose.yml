@@ -13,9 +13,9 @@ services:
     restart: unless-stopped
     environment:
       NODE_ENV: production
-      DATABASE_URL: 'postgresql://appuser:dUbocica%231389%21%21%21@postgres:5432/appdb?schema=public'
       HOST: 0.0.0.0
       PORT: 3000
+      # DATABASE_URL ćemo uneti u Portaineru
     expose:
       - '3000'
     networks:
