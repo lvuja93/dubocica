@@ -13,7 +13,7 @@ services:
     restart: unless-stopped
     environment:
       NODE_ENV: production
-
+      DATABASE_URL: ${DATABASE_URL}
       HOST: 0.0.0.0
       PORT: 3000
       # Dodaj svoje DEV env varijable ovde ili preko env_file

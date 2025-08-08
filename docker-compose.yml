@@ -15,7 +15,8 @@ services:
       NODE_ENV: production
       HOST: 0.0.0.0
       PORT: 3000
-      # DATABASE_URL ćemo uneti u Portaineru
+      DATABASE_URL: ${DATABASE_URL}
+
     expose:
       - '3000'
     networks:
