@@ -17,8 +17,16 @@
     ENV NODE_ENV=production
     ENV HOST=0.0.0.0
     ENV PORT=3000
+    
+    # Kopiramo build i node_modules
     COPY --from=builder /app ./
+    
+    # Kopiramo entrypoint skript
+    COPY docker-entrypoint.sh /app/docker-entrypoint.sh
+    RUN chmod +x /app/docker-entrypoint.sh
+    
     EXPOSE 3000
-    # Forsira port/host i kad "npm start" ne prosleđuje -p/-H
-    CMD ["npm", "run", "start", "--", "-p", "3000", "-H", "0.0.0.0"]
+    
+    # Umesto direktnog npm start, koristimo entrypoint
+    CMD ["/app/docker-entrypoint.sh"]
     
