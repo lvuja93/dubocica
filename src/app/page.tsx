@@ -9,7 +9,11 @@ export default function Home() {
         Web stranica u izradi{' '}
       </h1>
       <div>
-        <img src="./images/logo-dub.png" alt="" className="w-auto" />
+        <img
+          src="./images/logo-dub.png"
+          alt=""
+          className="w-auto flex justify-center"
+        />
       </div>
     </div>
   );
