@@ -19,9 +19,12 @@ export async function GET() {
       createdAt: true,
     },
   });
-
+  const usersSerialized = users.map((u) => ({
+    ...u,
+    createdAt: u.createdAt.toISOString(),
+  }));
   // (opciono) validacija izlaza
-  const payload = usersListDto.parse({ users });
+  const payload = usersListDto.parse({ usersSerialized });
   return NextResponse.json(payload, {
     status: 200,
     headers: { 'Cache-Control': 'no-store' },
@@ -52,9 +55,9 @@ export async function POST(req: Request) {
         createdAt: true,
       },
     });
-
+    const userSerialized = { ...user, createdAt: user.createdAt.toISOString() };
     // (opciono) validacija izlaza
-    const payload = { user: userDto.parse(user) };
+    const payload = { user: userDto.parse(userSerialized) };
     return NextResponse.json(payload, { status: 201 });
   } catch (e: any) {
     if (e?.code === 'P2002') {
