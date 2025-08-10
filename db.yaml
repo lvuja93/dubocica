@@ -1,2 +1,0 @@
-environment:
-  DATABASE_URL: 'postgresql://appuser:dUbocica%231389%21%21%21@postgres:5432/appdb?schema=public'
