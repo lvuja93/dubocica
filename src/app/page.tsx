@@ -8,7 +8,7 @@ export default function Home() {
         Naselje Dubočica <br />
         Web stranica u izradi{' '}
       </h1>
-      <div>
+      <div className="flex justify-center">
         <img
           src="./images/logo-dub.png"
           alt=""
