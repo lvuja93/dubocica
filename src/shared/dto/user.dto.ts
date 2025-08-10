@@ -15,7 +15,7 @@ export const userDto = z.object({
   email: z.string().email(),
   name: z.string().nullable().optional(),
   bio: z.string().nullable().optional(),
-  createdAt: z.string(), // ISO string
+  createdAt: z.string().datetime(), // ISO string
 });
 export type UserDto = z.infer<typeof userDto>;
 

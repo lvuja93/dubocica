@@ -24,7 +24,7 @@ export async function GET() {
     createdAt: u.createdAt.toISOString(),
   }));
   // (opciono) validacija izlaza
-  const payload = usersListDto.parse({ usersSerialized });
+  const payload = usersListDto.parse({ users: usersSerialized });
   return NextResponse.json(payload, {
     status: 200,
     headers: { 'Cache-Control': 'no-store' },
