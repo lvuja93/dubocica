@@ -28,7 +28,7 @@ export default function Login() {
     setLoading(false);
 
     if (res?.ok) {
-      router.push('/dashboard');
+      router.push('/user-dashboard');
     } else alert('Неуспешна пријава, проверите е-маил и лозинку');
   };
 
