@@ -47,11 +47,11 @@ const HeaderMobile = () => {
             Новости
           </Link>
           <Link
-            href="/"
+            href="/login"
             onClick={() => setOpen(false)}
             className="flex gap-2 justify-end"
           >
-            Админ
+            Пријава
             <LogIn></LogIn>
           </Link>
         </nav>
