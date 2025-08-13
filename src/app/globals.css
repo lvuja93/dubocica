@@ -7,16 +7,16 @@
   :root {
   }
 }
-
-body {
-  /* slika + “opacity” preko linear-gradient-a */
-  background-image: linear-gradient(
-      rgba(255, 255, 255, 0.4),
-      rgba(255, 255, 255, 0.4)
-    ),
-    url('/public/images/logo-dub.svg');
-  background-size: cover;
-  background-position: center;
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image: url('/images/logo-dub.png');
   background-repeat: no-repeat;
-  background-attachment: fixed; /* opcionalno, lep efekat */
+  background-position: center top; /* ili center center */
+  background-size: auto 100%; /* ⇦ prilagodi visini viewporta */
+  background-color: white; /* boja iza, popunjava trake levo/desno */
+  opacity: 0.1;
+  pointer-events: none;
 }

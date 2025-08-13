@@ -6,8 +6,8 @@ import { LogIn } from 'lucide-react';
 const Header = () => {
   return (
     <div>
-      <header className="hidden md:grid grid-cols-3 px-2 text-black font-semibold bg-gray-200  ">
-        <div className="flex items-center justify-center gap-4 focus:underline">
+      <header className="hidden md:grid grid-cols-3 px-2 text-[#FCD34D]  font-semibold bg-[#1E3A8A] ">
+        <div className="flex items-center justify-center gap-4 focus:underline text-xl">
           <Link href="/">Почетна</Link>
           <Link href="/">О нама</Link>
           <Link href="/">Новости</Link>
@@ -17,7 +17,7 @@ const Header = () => {
             <Image src={logo} alt="logo" className="w-18 h-auto py-1"></Image>
           </Link>
         </div>
-        <div className="flex items-center justify-end">
+        <div className="flex items-center justify-end text-xl">
           <Link href="/" className="flex gap-2">
             Админ
             <LogIn></LogIn>

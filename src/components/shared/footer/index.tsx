@@ -6,8 +6,8 @@ const Footer = () => {
   return (
     <div>
       <footer>
-        <div className="text-center text-black bg-gray-200 text-sm py-2">
-          <div className="flex justify-center text-black gap-2 pb-2">
+        <div className="text-center text-[#FCD34D] bg-[#162B66] text-sm py-2">
+          <div className="flex justify-center  gap-2 pb-2">
             <Link href="https://www.instagram.com/dubocica_naselje/#">
               {' '}
               <Instagram />{' '}

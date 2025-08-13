@@ -11,7 +11,7 @@ const HeaderMobile = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="md:hidden bg-gray-200 text-black font-semibold px-4">
+    <header className="md:hidden bg-[#1E3A8A] text-[#FCD34D] font-semibold px-4">
       {/* Gornji red */}
       <div className="flex items-center justify-between h-16">
         {/* Hamburger meni */}
