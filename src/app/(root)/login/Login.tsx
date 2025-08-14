@@ -2,7 +2,7 @@
 import { FormEvent, useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { set } from 'zod';
+import { toast } from 'react-hot-toast';
 
 export default function Login() {
   const router = useRouter();
@@ -28,10 +28,19 @@ export default function Login() {
     setLoading(false);
 
     if (res?.error) {
-      alert('Пријава није успела. Провери е-маил и лозинку.');
+      if (res.error === 'NOT_ALLOWED') {
+        alert('Tvoj nalog nije odobren. Kontaktiraj administraciju.');
+      } else {
+        toast.error(
+          'Провери е-маил и лозинку. Ако твој налог није одобрен, контактирај администрацију.'
+        );
+      }
       return;
-    } else {
+    } else if (res?.ok) {
+      // uspešna prijava, preusmeravamo na dashboard
+      toast.success('Успешна пријава!');
       router.push('/user-dashboard');
+      return;
     }
   };
 
