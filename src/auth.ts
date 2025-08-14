@@ -8,22 +8,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(prisma),
   secret: process.env.AUTH_SECRET,
   session: { strategy: 'jwt' },
-  logger: {
-    error(code, ...msg) {
-      console.error('[nextauth][error]', code, ...msg);
-    },
-    warn(code, ...msg) {
-      console.warn('[nextauth][warn]', code, ...msg);
-    },
-    debug(code, ...msg) {
-      console.debug('[nextauth][debug]', code, ...msg);
-    },
-  },
-  events: {
-    async signIn(message) {
-      console.log('[event] signIn', message?.user?.email);
-    },
-  },
+  // ... adapter, secret, trustHost, pages...
   providers: [
     Credentials({
       name: 'Email & Password',
@@ -32,18 +17,27 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         password: { label: 'Password', type: 'password' },
       },
       authorize: async (credentials) => {
-        const { email, password } = credentials as {
-          email: string;
-          password: string;
-        };
+        // 1) sigurno izvuci stringove
+        const rawEmail =
+          typeof credentials?.email === 'string' ? credentials.email : '';
+        const rawPass =
+          typeof credentials?.password === 'string' ? credentials.password : '';
+
+        const email = rawEmail.trim().toLowerCase();
+        const password = rawPass;
 
         if (!email || !password) return null;
 
+        // 2) nadji korisnika
         const user = await prisma.user.findUnique({ where: { email } });
-        if (!user || !user.hashedPassword) return null;
+        if (!user || !user.hashedPassword) return null; // runtime guard
 
-        const isValid = await bcrypt.compare(password, user.hashedPassword);
-        if (!isValid) return null;
+        // 3) TS guard za hash
+        const hash = user.hashedPassword as string;
+
+        // 4) uporedi
+        const ok = await bcrypt.compare(password, hash);
+        if (!ok) return null;
 
         return { id: user.id, name: user.name ?? '', email: user.email ?? '' };
       },
