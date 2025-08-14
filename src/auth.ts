@@ -6,6 +6,8 @@ import bcrypt from 'bcryptjs';
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(prisma),
+  secret: process.env.AUTH_SECRET,
+  session: { strategy: 'jwt' },
   providers: [
     Credentials({
       name: 'Email & Password',
@@ -33,6 +35,20 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   ],
   pages: {
     signIn: '/login',
+  },
+  callbacks: {
+    async jwt({ token, user }) {
+      // cuvamo user ID u tokenu
+      if (user) token.id = (user as any).id;
+      return token;
+    },
+    async session({ session, token }) {
+      // prosledi ID u session.user
+      if (session.user && token?.id) {
+        (session.user as any).id = token.id as string;
+      }
+      return session;
+    },
   },
 });
 

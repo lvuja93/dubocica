@@ -27,9 +27,12 @@ export default function Login() {
     });
     setLoading(false);
 
-    if (res?.ok) {
+    if (res?.error) {
+      alert('Пријава није успела. Провери е-маил и лозинку.');
+      return;
+    } else {
       router.push('/user-dashboard');
-    } else alert('Неуспешна пријава, проверите е-маил и лозинку');
+    }
   };
 
   return (
