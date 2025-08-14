@@ -7,11 +7,11 @@
     # --- build ---
     FROM node:24-alpine AS builder
     WORKDIR /app
-    RUN apk add --no-cache openssl libc6-compat   # ⭐ potrebno za Prisma engine
+    RUN apk add --no-cache openssl libc6-compat   
     
     COPY --from=deps /app/node_modules ./node_modules
-    COPY prisma ./prisma                          # ⭐ kopiraj pre generate
-    RUN npx prisma generate                       # ⭐
+    COPY prisma ./prisma                          
+    RUN npx prisma generate                       
     COPY . .
     RUN npm run build
     
