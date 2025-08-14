@@ -8,6 +8,22 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(prisma),
   secret: process.env.AUTH_SECRET,
   session: { strategy: 'jwt' },
+  logger: {
+    error(code, ...msg) {
+      console.error('[nextauth][error]', code, ...msg);
+    },
+    warn(code, ...msg) {
+      console.warn('[nextauth][warn]', code, ...msg);
+    },
+    debug(code, ...msg) {
+      console.debug('[nextauth][debug]', code, ...msg);
+    },
+  },
+  events: {
+    async signIn(message) {
+      console.log('[event] signIn', message?.user?.email);
+    },
+  },
   providers: [
     Credentials({
       name: 'Email & Password',
