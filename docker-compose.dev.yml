@@ -12,6 +12,9 @@ services:
     container_name: dubocica-dev
     restart: unless-stopped
     environment:
+      AUTH_SECRET: ${AUTH_SECRET}
+      AUTH_TRUST_HOST: ${AUTH_TRUST_HOST}
+      NEXTAUTH_URL: ${NEXTAUTH_URL:-https://dev.dubocica.rs}
       NODE_ENV: production
       DATABASE_URL: ${DATABASE_URL}
       HOST: 0.0.0.0
