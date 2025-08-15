@@ -2,19 +2,16 @@ import { NextResponse } from 'next/server';
 import { auth } from '@/auth';
 import { prisma } from '../../../../../lib/prisma';
 
-interface Params {
-  params: { id: string };
-}
-
-export async function GET(_: Request, { params }: Params) {
+export async function GET(_: Request, { params }: any) {
   try {
     const post = await prisma.post.findUnique({
       where: { id: params.id },
       include: { author: true },
     });
 
-    if (!post)
+    if (!post) {
       return NextResponse.json({ error: 'Not found' }, { status: 404 });
+    }
 
     return NextResponse.json(post);
   } catch (error) {
@@ -23,7 +20,7 @@ export async function GET(_: Request, { params }: Params) {
   }
 }
 
-export async function PUT(req: Request, { params }: Params) {
+export async function PUT(req: Request, { params }: any) {
   const session = await auth();
 
   if (!session || !session.user?.id) {
@@ -32,8 +29,9 @@ export async function PUT(req: Request, { params }: Params) {
 
   try {
     const existing = await prisma.post.findUnique({ where: { id: params.id } });
-    if (!existing)
+    if (!existing) {
       return NextResponse.json({ error: 'Not found' }, { status: 404 });
+    }
 
     if (
       session.user.role !== 'ADMIN' &&
@@ -61,7 +59,7 @@ export async function PUT(req: Request, { params }: Params) {
   }
 }
 
-export async function DELETE(_: Request, { params }: Params) {
+export async function DELETE(_: Request, { params }: any) {
   const session = await auth();
 
   if (!session || !session.user?.id) {
@@ -70,8 +68,9 @@ export async function DELETE(_: Request, { params }: Params) {
 
   try {
     const existing = await prisma.post.findUnique({ where: { id: params.id } });
-    if (!existing)
+    if (!existing) {
       return NextResponse.json({ error: 'Not found' }, { status: 404 });
+    }
 
     if (
       session.user.role !== 'ADMIN' &&
