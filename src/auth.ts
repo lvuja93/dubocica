@@ -7,7 +7,7 @@ import bcrypt from 'bcryptjs';
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(prisma),
   secret: process.env.AUTH_SECRET,
-  session: { strategy: 'jwt' },
+  session: { strategy: 'jwt', maxAge: 2 * 60 * 60 },
   providers: [
     Credentials({
       name: 'Email & Password',
@@ -33,7 +33,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         const isValid = await bcrypt.compare(password, user.hashedPassword);
         if (!isValid) return null;
 
-        return { id: user.id, name: user.name ?? '', email: user.email ?? '' };
+        return {
+          id: user.id,
+          name: user.name ?? '',
+          email: user.email ?? '',
+          role: user.role,
+        };
       },
     }),
   ],
@@ -42,14 +47,18 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   },
   callbacks: {
     async jwt({ token, user }) {
-      // cuvamo user ID u tokenu
-      if (user) token.id = (user as any).id;
+      // Kada se korisnik prvi put uloguje, "user" dolazi iz baze
+      if (user) {
+        token.id = user.id;
+        token.role = (user as any).role;
+      }
       return token;
     },
+
     async session({ session, token }) {
-      // prosledi ID u session.user
-      if (session.user && token?.id) {
+      if (session.user) {
         (session.user as any).id = token.id as string;
+        (session.user as any).role = token.role as string;
       }
       return session;
     },

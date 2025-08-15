@@ -39,7 +39,7 @@ export default function Login() {
     } else if (res?.ok) {
       // uspešna prijava, preusmeravamo na dashboard
       toast.success('Успешна пријава!');
-      router.push('/user-dashboard');
+      router.push('/user-dashboard/post');
       return;
     }
   };

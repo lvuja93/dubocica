@@ -3,12 +3,30 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, LogIn, LogOut } from 'lucide-react';
 import logo from '../../../../public/images/logo-dub.png';
-import { LogIn } from 'lucide-react';
+import { useSession, signOut } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 const HeaderMobile = () => {
   const [open, setOpen] = useState(false);
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+  if (status === 'loading') return null; // sprečava treptanje
+
+  const handleLogout = () => {
+    setOpen(false);
+    signOut({ callbackUrl: '/' });
+  };
+
+  const handleRedirect = () => {
+    if (session?.user?.role === 'ADMIN') {
+      router.push('/admin-dashboard');
+    } else if (session?.user?.role === 'USER') {
+      router.push('/user-dashboard');
+    }
+  };
 
   return (
     <header className="md:hidden bg-[#1E3A8A] text-[#FCD34D] font-semibold px-4">
@@ -21,7 +39,7 @@ const HeaderMobile = () => {
 
         {/* Logo u sredini */}
         <div className="flex justify-center items-center">
-          <Link href="/">
+          <Link href="/" onClick={() => setOpen(false)}>
             <Image
               src={logo}
               alt="logo"
@@ -30,7 +48,7 @@ const HeaderMobile = () => {
           </Link>
         </div>
 
-        {/* Desna strana prazna ili za dodatne akcije */}
+        {/* Prazan prostor da centriramo logo */}
         <div className="w-7" />
       </div>
 
@@ -46,14 +64,28 @@ const HeaderMobile = () => {
           <Link href="/" onClick={() => setOpen(false)}>
             Новости
           </Link>
-          <Link
-            href="/login"
-            onClick={() => setOpen(false)}
-            className="flex gap-2 justify-end"
-          >
-            Пријава
-            <LogIn></LogIn>
-          </Link>
+
+          {/* Prijava / Odjava */}
+          {!session ? (
+            <Link
+              href="/login"
+              onClick={() => setOpen(false)}
+              className="flex gap-2 justify-end"
+            >
+              Пријава
+              <LogIn />
+            </Link>
+          ) : (
+            <div className="flex flex-col justify-end gap-4">
+              <button onClick={handleRedirect} className="flex justify-end">
+                Контролни панел{' '}
+              </button>
+              <button onClick={handleLogout} className="flex gap-2 justify-end">
+                Одјава
+                <LogOut />
+              </button>
+            </div>
+          )}
         </nav>
       )}
     </header>
