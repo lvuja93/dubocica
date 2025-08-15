@@ -32,12 +32,12 @@ export default function LatestPosts() {
       </h2>
 
       {/* Mobilni - vertikalno */}
-      <div className="flex flex-col gap-6 md:hidden">
+      <div className="md:hidden flex gap-4 overflow-x-auto pb-4 scrollbar-hide snap-x snap-mandatory">
         {posts.map((post) => (
           <Link
             key={post.id}
             href={`/posts/${post.id}`}
-            className="border rounded-lg overflow-hidden bg-white shadow hover:shadow-md transition"
+            className="flex-shrink-0 w-[80%] snap-start border rounded-lg overflow-hidden bg-white shadow hover:shadow-md transition"
           >
             {post.images?.[0] ? (
               <img
