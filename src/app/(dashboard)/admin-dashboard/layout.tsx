@@ -21,14 +21,14 @@ export default function UserDashboardLayout({
       router.push('/login');
       toast.error('Мораш бити пријављен, да би приступио овој страници.');
     }
-    if (status === 'authenticated' && session?.user?.role !== 'USER') {
+    if (status === 'authenticated' && session?.user?.role !== 'ADMIN') {
       router.push('/');
       toast.error('Немаш приступ овој страници.');
     }
   }, [status, session, router]);
 
   if (status === 'loading') {
-    return null; // ili neki loader
+    return null;
   }
 
   return (

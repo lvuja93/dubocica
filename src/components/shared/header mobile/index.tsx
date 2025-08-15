@@ -7,6 +7,7 @@ import { Menu, X, LogIn, LogOut } from 'lucide-react';
 import logo from '../../../../public/images/logo-dub.png';
 import { useSession, signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
 
 const HeaderMobile = () => {
   const [open, setOpen] = useState(false);
@@ -15,9 +16,10 @@ const HeaderMobile = () => {
 
   if (status === 'loading') return null; // sprečava treptanje
 
-  const handleLogout = () => {
-    setOpen(false);
-    signOut({ callbackUrl: '/' });
+  const handleSignOut = async () => {
+    await signOut({ redirect: false });
+    toast.success('Успешно сте се одјавили!', { duration: 3000 });
+    router.push('/');
   };
 
   const handleRedirect = () => {
@@ -80,7 +82,10 @@ const HeaderMobile = () => {
               <button onClick={handleRedirect} className="flex justify-end">
                 Контролни панел{' '}
               </button>
-              <button onClick={handleLogout} className="flex gap-2 justify-end">
+              <button
+                onClick={handleSignOut}
+                className="flex gap-2 justify-end"
+              >
                 Одјава
                 <LogOut />
               </button>

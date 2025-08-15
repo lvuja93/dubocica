@@ -52,6 +52,7 @@ model User {
   role           UserRole  @default(USER)
   accounts       Account[]
   sessions       Session[]
+  posts          Post[]
 
   @@map("users")
 }
@@ -63,4 +64,42 @@ model VerificationToken {
 
   @@unique([identifier, token])
   @@map("verification_tokens")
+}
+
+
+model Post {
+  id        String   @id @default(uuid()) @db.Uuid
+  title     String
+  excerpt   String
+  images    String[] // niz URL-ova slika
+  allowed   Boolean  @default(false)
+  mainText  String   @db.Text
+  comments  Comment[]
+  authorId  String   @db.Uuid
+  author    User     @relation(fields: [authorId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Comment {
+  id        String    @id @default(uuid()) @db.Uuid
+  name      String
+  email     String
+  text      String    @db.Text
+  postId    String    @db.Uuid
+  post      Post      @relation(fields: [postId], references: [id])
+  replies   Reply[]   // lista odgovora na komentar
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Reply {
+  id         String    @id @default(uuid()) @db.Uuid
+  name       String
+  email      String
+  text       String    @db.Text
+  commentId  String    @db.Uuid
+  comment    Comment   @relation(fields: [commentId], references: [id])
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
 }

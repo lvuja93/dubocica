@@ -12,9 +12,10 @@ export default function Header() {
   const router = useRouter();
 
   if (status === 'loading') return null;
-  const handleSignOut = () => {
+  const handleSignOut = async () => {
+    await signOut({ redirect: false });
     toast.success('Успешно сте се одјавили!', { duration: 3000 });
-    signOut({ callbackUrl: '/' });
+    router.push('/');
   };
 
   const handleRedirect = () => {
