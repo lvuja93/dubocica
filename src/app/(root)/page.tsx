@@ -10,6 +10,7 @@ export default function Home() {
           <h1 className="text-center text-gray-900 text-2xl font font-semibold md:text-4xl  mx-8 md:mx-0 py-3 mb-4 rounded-xl md:px-4 pt-20">
             Добродошли на званични веб сајт насеља Дубочица
           </h1>
+          <h2 className="text-xl">Сајт је још увек у изради</h2>
         </div>
         <div className="flex justify-center items-center text-center"></div>
       </div>

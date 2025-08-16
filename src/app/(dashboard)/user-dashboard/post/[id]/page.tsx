@@ -24,13 +24,15 @@ export default function PostDetailPage() {
   if (!post) return <div>Учитавање објаве...</div>;
 
   return (
-    <div className="px-4 py-8 max-w-5xl mx-auto flex">
+    <div className="px-4 py-8 max-w-5xl mx-auto flex flex-col justify-center">
       {/* Naslov */}
-      <h1 className="text-4xl font-bold mb-6">{post.title}</h1>
+      <h1 className="text-2xl flex justify-center md:text-4xl  font-bold mb-6 text-center">
+        {post.title}
+      </h1>
 
       {/* Uvod */}
       <div
-        className="text-2xl mb-6 prose max-w-none"
+        className="text-xl md:text-2xl my-6 prose max-w-none"
         dangerouslySetInnerHTML={{ __html: post.excerpt }}
       />
 

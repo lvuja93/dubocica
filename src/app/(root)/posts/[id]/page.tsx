@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
 import logo from '../../../../../public/images/logo-dub.png';
+import ShareButtons from '@/components/shared/ShareButtons';
 
 export default function PublicPostPage() {
   const { id } = useParams();
@@ -22,8 +23,11 @@ export default function PublicPostPage() {
   return (
     <div className="px-4 py-8 max-w-5xl mx-auto">
       {/* Naslov */}
-      <h1 className="text-4xl font-bold mb-6">{post.title}</h1>
 
+      <h1 className="text-4xl font-bold mb-6 text-center">{post.title}</h1>
+      <div className="flex justify-end py-6">
+        <ShareButtons url={window.location.href} text={post.title} />
+      </div>
       {/* Uvod */}
       <div
         className="text-2xl mb-6 prose max-w-none"
@@ -52,6 +56,10 @@ export default function PublicPostPage() {
         className="text-2xl prose max-w-none"
         dangerouslySetInnerHTML={{ __html: post.mainText }}
       />
+
+      <div className="flex justify-end py-6">
+        <ShareButtons url={window.location.href} text={post.title} />
+      </div>
     </div>
   );
 }

@@ -4,7 +4,35 @@ import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Placeholder from '@tiptap/extension-placeholder';
 import TextAlign from '@tiptap/extension-text-align';
+import Paragraph from '@tiptap/extension-paragraph';
 import { useEffect } from 'react';
+
+// ✅ Paragraph sa podrškom za indent klase
+const IndentParagraph = Paragraph.extend({
+  addAttributes() {
+    return {
+      ...this.parent?.(),
+      indent: {
+        default: 0,
+        renderHTML: (attributes) => {
+          if (!attributes.indent || attributes.indent === 0) {
+            return {};
+          }
+          return {
+            class: `indent-${attributes.indent}`,
+          };
+        },
+        parseHTML: (element) => {
+          const match = Array.from(element.classList).find((c) =>
+            c.startsWith('indent-')
+          );
+          if (!match) return 0;
+          return parseInt(match.replace('indent-', ''), 10) || 0;
+        },
+      },
+    };
+  },
+});
 
 interface TiptapEditorProps {
   value: string;
@@ -23,8 +51,10 @@ export default function TiptapEditor({
     immediatelyRender: false,
     extensions: [
       StarterKit.configure({
+        paragraph: false, // ❌ isključujemo default paragraf
         heading: { levels: [1, 2, 3] },
       }),
+      IndentParagraph, // ✅ naš paragraf sa indent klasom
       TextAlign.configure({
         types: ['heading', 'paragraph'],
       }),
@@ -49,7 +79,7 @@ export default function TiptapEditor({
   return (
     <div className="border rounded-lg">
       {/* Toolbar */}
-      <div className="flex gap-2 p-2 border-b bg-gray-100">
+      <div className="flex flex-wrap gap-2 p-2 border-b bg-gray-100">
         <button
           onClick={() => editor.chain().focus().toggleBold().run()}
           className="px-2 py-1 border rounded"
@@ -79,6 +109,16 @@ export default function TiptapEditor({
           className="px-2 py-1 border rounded"
         >
           Desno
+        </button>
+
+        {/* ✅ Prazan red */}
+        <button
+          onClick={() =>
+            editor.chain().focus().insertContent('<p><br></p>').run()
+          }
+          className="px-2 py-1 border rounded"
+        >
+          ⏎ Prazan red
         </button>
       </div>
 

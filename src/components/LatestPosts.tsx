@@ -28,7 +28,7 @@ export default function LatestPosts() {
   return (
     <div className="mt-10 px-4 mb-8">
       <h2 className="text-2xl font-bold text-gray-900 mb-4 flex justify-center">
-        Последње новости
+        Последње објаве
       </h2>
 
       {/* Mobilni - vertikalno */}
@@ -37,7 +37,7 @@ export default function LatestPosts() {
           <Link
             key={post.id}
             href={`/posts/${post.id}`}
-            className="flex-shrink-0 w-[80%] snap-start border rounded-lg overflow-hidden bg-white shadow hover:shadow-md transition"
+            className="flex-shrink-0 w-[80%] snap-start border rounded-lg overflow-hidden bg-white shadow-xl hover:shadow-2xl transition"
           >
             {post.images?.[0] ? (
               <img
@@ -53,7 +53,9 @@ export default function LatestPosts() {
               />
             )}
             <div className="p-4">
-              <h3 className="font-semibold text-lg mb-2">{post.title}</h3>
+              <h3 className="font-semibold text-lg mb-2 text-center">
+                {post.title}
+              </h3>
               <div
                 className="text-gray-600 text-sm line-clamp-3"
                 dangerouslySetInnerHTML={{ __html: post.excerpt }}
@@ -64,12 +66,12 @@ export default function LatestPosts() {
       </div>
 
       {/* Desktop - grid */}
-      <div className="hidden md:grid md:grid-cols-3 gap-6">
+      <div className="hidden md:grid md:grid-cols-3 gap-6 max-w-[1200px]">
         {posts.map((post) => (
           <Link
             key={post.id}
             href={`/posts/${post.id}`}
-            className="border rounded-lg overflow-hidden bg-white shadow hover:shadow-md transition"
+            className="border rounded-lg overflow-hidden bg-white shadow-xl hover:shadow-2xl transition"
           >
             {post.images?.[0] ? (
               <img
@@ -85,7 +87,9 @@ export default function LatestPosts() {
               />
             )}
             <div className="p-4">
-              <h3 className="font-semibold text-lg mb-2">{post.title}</h3>
+              <h3 className="font-semibold text-lg mb-2 text-center">
+                {post.title}
+              </h3>
               <div
                 className="text-gray-600 text-sm line-clamp-3"
                 dangerouslySetInnerHTML={{ __html: post.excerpt }}
@@ -93,6 +97,9 @@ export default function LatestPosts() {
             </div>
           </Link>
         ))}
+      </div>
+      <div className=" flex justify-center text-xl md:justify-end pt-2 underline underline-offset-4">
+        Види све објаве
       </div>
     </div>
   );
