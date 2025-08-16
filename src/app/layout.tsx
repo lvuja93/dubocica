@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Naselje Dubočica',
+  title: 'Насеље Дубочица',
 };
 
 export default function RootLayout({
