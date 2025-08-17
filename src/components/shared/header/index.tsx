@@ -48,8 +48,13 @@ export default function Header() {
           <Image src={logo} alt="logo" className="w-18 h-auto py-1" />{' '}
         </Link>{' '}
       </div>{' '}
-      <div className="flex items-center justify-end text-xl font-semibold">
-        {' '}
+      <div className="flex items-center justify-end text-xl font-semibold gap-4 ">
+        <Link
+          href={'/turnir'}
+          className="text-xl md:text-2xl font-semibold bg-[#F59E0B] hover:bg-[#3B82F6] py-2 px-4 rounded-xl text-white transition disabled:bg-gray-400 hover:cursor-pointer underline underline-offset-4"
+        >
+          Турнир
+        </Link>{' '}
         {!session ? (
           <Link
             href="/login"
