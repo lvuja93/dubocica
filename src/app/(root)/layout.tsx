@@ -2,7 +2,7 @@ import Header from '@/components/shared/header';
 import Footer from '@/components/shared/footer';
 import HeaderMobile from '@/components/shared/header mobile';
 import { SessionProvider } from 'next-auth/react';
-import ToastProvider from '@/components/ToastProvider';
+import ToastProvider from '@/components/shared/ToastProvider';
 
 export default function RootLayout({
   children,
