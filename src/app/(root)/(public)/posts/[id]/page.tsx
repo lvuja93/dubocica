@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
-import logo from '../../../../../public/images/logo-dub.png';
+import logo from '../../../../../../public/images/logo-dub.png';
 import ShareButtons from '@/components/shared/ShareButtons';
 
 export default function PublicPostPage() {

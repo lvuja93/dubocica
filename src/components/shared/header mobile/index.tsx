@@ -26,7 +26,7 @@ const HeaderMobile = () => {
     if (session?.user?.role === 'ADMIN') {
       router.push('/admin-dashboard');
     } else if (session?.user?.role === 'USER') {
-      router.push('/user-dashboard');
+      router.push('/user-dashboard/post');
     }
   };
 

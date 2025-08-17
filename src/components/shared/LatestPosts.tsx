@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import logo from '../../public/images/logo-dub.png';
+import logo from '../../../public/images/logo-dub.png';
 
 export default function LatestPosts() {
   const [posts, setPosts] = useState<any[]>([]);
@@ -27,8 +27,8 @@ export default function LatestPosts() {
 
   return (
     <div className="mt-10 px-4 mb-8">
-      <h2 className="text-2xl font-bold text-gray-900 mb-4 flex justify-center">
-        Последње објаве
+      <h2 className="text-2xl font-bold text-gray-900 mb-4 md:mb-10 flex justify-center">
+        Актуелне објаве
       </h2>
 
       {/* Mobilni - vertikalno */}
