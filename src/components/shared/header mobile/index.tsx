@@ -33,7 +33,7 @@ const HeaderMobile = () => {
   return (
     <header className="md:hidden bg-[#1E3A8A] text-[#FCD34D] font-semibold px-4">
       {/* Gornji red */}
-      <div className="flex items-center justify-between h-16">
+      <div className="grid grid-cols-3 items-center justify-between h-16">
         {/* Hamburger meni */}
         <button onClick={() => setOpen(!open)} aria-label="Toggle menu">
           {open ? <X size={28} /> : <Menu size={28} />}
@@ -51,7 +51,14 @@ const HeaderMobile = () => {
         </div>
 
         {/* Prazan prostor da centriramo logo */}
-        <div className="w-7" />
+        <div className="flex justify-center">
+          <Link
+            href={'/turnir'}
+            className="text-xl font-semibold bg-[#F59E0B] hover:bg-[#3B82F6] py-1 px-2 rounded-xl text-white transition disabled:bg-gray-400 hover:cursor-pointer underline underline-offset-4"
+          >
+            Турнир
+          </Link>
+        </div>
       </div>
 
       {/* Padajući meni */}
