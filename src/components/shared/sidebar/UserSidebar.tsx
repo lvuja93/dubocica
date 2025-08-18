@@ -14,7 +14,7 @@ const links = [
   { href: '/user-dashboard/post', label: 'Објаве', icon: Rss },
   { href: '/dashboard/analytics', label: 'Галерија', icon: Images },
   { href: '/dashboard/users', label: 'Акције', icon: HeartHandshake },
-  { href: '/dashboard/settings', label: 'Турнир', icon: Trophy },
+  { href: '/user-dashboard/tournament', label: 'Турнир', icon: Trophy },
   { href: '/user-dashboard/settings', label: 'Корисник', icon: UserRoundCog },
 ];
 
