@@ -18,7 +18,7 @@ export default function TournamentAppForm() {
     setMessage('');
 
     try {
-      await axios.post('/api/public/tournament', {
+      await axios.post('/api/tournament', {
         name,
         teamName,
         telephone,
