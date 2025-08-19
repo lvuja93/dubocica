@@ -57,7 +57,7 @@ export default function Tournament() {
   if (loading) return <p className="text-center py-8">Учитавање...</p>;
 
   return (
-    <div className="p-6 md:p-10">
+    <div className="px-4 pb-14 md:mb-5 md:p-10">
       <h1 className="text-3xl font-bold text-[#1E3A8A] mb-6">
         Пријаве за турнир
       </h1>
@@ -65,7 +65,7 @@ export default function Tournament() {
       {applications.length === 0 ? (
         <p className="text-center text-gray-600">Нема пријава.</p>
       ) : (
-        <ul className="space-y-4">
+        <ul className=" grid md:grid-cols-2 gap-2">
           {applications.map((app) => (
             <li
               key={app.id}
